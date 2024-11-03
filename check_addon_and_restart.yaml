@@ -3,6 +3,7 @@ blueprint:
   description: >
     Prüft in regelmäßigen Abständen, ob ein Add-on läuft und startet es gegebenenfalls neu.
     
+    
     ***NOTE:*** 
     Im Normalfall sollte dieser automatische Addon-Neustart durch den Watchdog geschehen. Bei einigen Addons funktioniert dies leider nicht. 
     Dafür gibt es diese Automation.
