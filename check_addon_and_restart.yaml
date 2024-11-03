@@ -1,0 +1,78 @@
+blueprint:
+  name: Prüfe und starte Addon wenn gestoppt
+  description: Prüft in regelmäßigen Abständen, ob ein Add-on läuft und startet es gegebenenfalls neu
+  domain: automation
+  input:
+    addon_slug:
+      name: Add-on Slug
+      description: Der Slug des zu prüfenden Add-ons (z. B. core_mosquitto).
+      default: core_mosquitto
+    interval_minutes:
+      name: Prüfintervall (in Minuten)
+      description: Zeitintervall in Minuten, um den Add-on-Status zu prüfen.
+      default: 15
+    watch_item:
+      name: Boolean-Item
+      selector:
+        entity:
+          filter:
+            - domain: binary_sensor
+
+
+    notification_enabled:
+      name: Aktiviert?
+      description: Benachrichtigung aktvieren
+      selector:
+        boolean:
+
+    notify_action:
+      name: Notify-Aktion
+      description: Dieser Dienst wird zur Benachrichtigung verwendet.
+      selector:
+        entity:
+          filter:
+            - domain: notify
+            
+    notification_title:
+      name: Titel
+      description: Der Titel der Benachrichtigung
+      
+
+trigger:
+  - platform: time
+    at: "00:00:00"  # Startet die Schleife täglich um Mitternacht
+
+variables:
+  addon_slug: !input addon_slug
+  interval_minutes: !input interval_minutes
+  notification_enabled: !input notification_enabled
+  notify_action: !input notify_action
+  notification_title: !input notification_title
+  watch_item: !input watch_item
+
+action:
+  - repeat:
+      while: []
+      sequence:       
+          
+        - if: "{{ is_state(watch_item, 'on') }}"
+          then: []
+          else:
+            - alias: "Restart Add-on"
+              service: hassio.addon_start
+              data:
+                addon: "{{ addon_slug }}"
+                  
+            - if: "{{ notification_enabled }}"
+              then:
+                - service: "{{ notify_action }}"
+                  data:
+                    title: "{{notification_title}}"
+                    message: |-
+                      {{addon_slug}} läuft nicht. Starte neu...
+                    data:
+                      inline_keyboard:
+                        - "\"⚆ Zum Startmenü:/start\""
+                    
+        - delay:
+            minutes: "{{ interval_minutes }}"
