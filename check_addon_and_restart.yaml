@@ -22,6 +22,10 @@ blueprint:
       default: 15
     watch_item:
       name: Boolean-Item
+      description: >
+        Home Assistant erstellt für jedes Addon automatisch eine Sensor-Entität, welche zeigt, ob das Addon läuft. Dieses hier eintragen. 
+        
+        Der Name dieses Sensors sieht wie folgt aus: binary_sensor.*_running
       selector:
         entity:
           filter:
