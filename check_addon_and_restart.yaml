@@ -1,6 +1,8 @@
 blueprint:
   name: Prüfe und starte Addon wenn gestoppt
-  description: Prüft in regelmäßigen Abständen, ob ein Add-on läuft und startet es gegebenenfalls neu
+  description: >
+    Prüft in regelmäßigen Abständen, ob ein Add-on läuft und startet es gegebenenfalls neu.
+  author: Stephan Beier (stbkde)
   domain: automation
   input:
     addon_slug:
@@ -17,14 +19,11 @@ blueprint:
         entity:
           filter:
             - domain: binary_sensor
-
-
     notification_enabled:
       name: Aktiviert?
       description: Benachrichtigung aktvieren
       selector:
         boolean:
-
     notify_action:
       name: Notify-Aktion
       description: Dieser Dienst wird zur Benachrichtigung verwendet.
@@ -32,12 +31,10 @@ blueprint:
         entity:
           filter:
             - domain: notify
-            
     notification_title:
       name: Titel
       description: Der Titel der Benachrichtigung
       
-
 trigger:
   - platform: time
     at: "00:00:00"  # Startet die Schleife täglich um Mitternacht
