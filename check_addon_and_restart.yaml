@@ -2,6 +2,10 @@ blueprint:
   name: Prüfe und starte Addon wenn gestoppt
   description: >
     Prüft in regelmäßigen Abständen, ob ein Add-on läuft und startet es gegebenenfalls neu.
+    
+    ***NOTE:*** 
+    Im Normalfall sollte dieser automatische Addon-Neustart durch den Watchdog geschehen. Bei einigen Addons funktioniert dies leider nicht. 
+    Dafür gibt es diese Automation.
   author: Stephan Beier (stbkde)
   domain: automation
   input:
@@ -11,7 +15,8 @@ blueprint:
       default: core_mosquitto
     interval_minutes:
       name: Prüfintervall (in Minuten)
-      description: Zeitintervall in Minuten, um den Add-on-Status zu prüfen.
+      description: >-
+        Zeitintervall in Minuten, um den Add-on-Status zu prüfen. Die Schliefe wird jeden Tag um Mitternacht gestartet.
       default: 15
     watch_item:
       name: Boolean-Item
