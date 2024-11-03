@@ -8,6 +8,7 @@ blueprint:
     Im Normalfall sollte dieser automatische Addon-Neustart durch den Watchdog geschehen. Bei einigen Addons funktioniert dies leider nicht. 
     Dafür gibt es diese Automation.
   author: Stephan Beier (stbkde)
+  source_url: https://github.com/stbkde/HA_Blueprints/blob/main/check_addon_and_restart.yaml
   domain: automation
   input:
     addon_slug:
